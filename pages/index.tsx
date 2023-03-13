@@ -1,14 +1,14 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-import { useState } from 'react'
-
-const inter = Inter({ subsets: ['latin'] })
+import { useReducer } from 'react'
+import { CountActionType, countReducer, InitialActionType, InitialSubmitState, submitReducer, SubmitStateType } from '@/utilities/reducers'
 
 export default function Home() {
 
-  const [currentAmount, setCurrentAmount] = useState<number>(0)
+  const [countState, dispatchCount] = useReducer(countReducer, InitialActionType)
+
+  const [submittedState, dispatchSubmitted] = useReducer(submitReducer, InitialSubmitState)
+
+  const previouslySubmittedValues = submittedState.arrayValue.join(', ')
 
   return (
     <div className={styles.myCenter}>
@@ -21,17 +21,27 @@ export default function Home() {
           id='initial-amount'
           type={'text'}
           onChange={(e) => {
-            !Number.isNaN(parseInt(e.target.value)) ? setCurrentAmount(parseInt(e.target.value)) : setCurrentAmount(0)
+            !Number.isNaN(parseInt(e.target.value)) ?
+              dispatchCount({
+                type: 'changed_input',
+                value: parseInt(e.target.value)
+              } as CountActionType) :
+              dispatchCount({
+                type: 'changed_input',
+                value: 0
+              })
           }}
-          value={currentAmount}
+          value={countState.value}
         />
         <br />
 
         <button
           onClick={(e): void => {
             e.preventDefault()
-            const newAmount = currentAmount + 1
-            setCurrentAmount(newAmount)
+            dispatchCount({
+              type: '+1',
+              value: countState.value
+            } as CountActionType)
           }}
         >
           +1 Value
@@ -40,8 +50,10 @@ export default function Home() {
         <button
           onClick={(e): void => {
             e.preventDefault()
-            const newAmount = currentAmount - 1
-            setCurrentAmount(newAmount)
+            dispatchCount({
+              type: '-1',
+              value: countState.value
+            } as CountActionType)
           }
           }
         >
@@ -52,12 +64,20 @@ export default function Home() {
         <button
           onClick={(e) => {
             e.preventDefault()
-            console.log("I'm clicked")
+            dispatchSubmitted({
+              type: 'submitted',
+              arrayValue: submittedState.arrayValue,
+              newValue: countState.value
+            } as SubmitStateType)
           }}
         >
           Submit
         </button>
       </form>
+      <div>
+        <label htmlFor='prev-sub'>Previous Submissions</label>
+        <div id='prev-sub'>{previouslySubmittedValues}</div>
+      </div>
     </div>
   )
 }
