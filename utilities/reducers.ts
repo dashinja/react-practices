@@ -9,8 +9,6 @@ export const InitialActionType: CountActionType = {
 }
 
 export function countReducer(state: CountActionType, action: CountActionType): CountActionType {
-  console.log('count reducer called')
-  console.log('action: ', action)
   switch(action.type) {
     case 'changed_input':
       return {
@@ -51,9 +49,6 @@ export const InitialSubmitState = {
 export const submitReducer = (state: SubmitStateType, action: SubmitStateType) => {
   switch (action.type) {
     case 'submitted':
-      console.log('state in submitReducer: ', state)
-      console.log('submitReducer state.newValue: ', state.newValue)
-      console.log('what is this: ', [...state.arrayValue, state.newValue])
       return {
         ...state,
       arrayValue: [...state.arrayValue, action.newValue]
