@@ -21,7 +21,9 @@ export default function Home() {
           id='initial-amount'
           type={'text'}
           onChange={(e) => {
-            !Number.isNaN(parseInt(e.target.value)) ?
+            const isInputFilled = !Number.isNaN(parseInt(e.target.value))
+            
+             isInputFilled ?
               dispatchCount({
                 type: 'changed_input',
                 value: parseInt(e.target.value)
