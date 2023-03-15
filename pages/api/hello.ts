@@ -9,5 +9,18 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json({ name: 'John Doe' })
+  switch (req.method) {
+    case 'GET':
+      res.status(200).json({ name: 'John Doe' })
+      break;
+  
+
+    case 'POST':
+      res.status(200).json({name: 'Success'})
+      break;
+    default:
+      console.error('Incorrect HTTP Verb')
+      res.status(400).end()
+      break;
+  }
 }
