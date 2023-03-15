@@ -24,7 +24,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+<<<<<<< HEAD
+=======
 .vscode/
+>>>>>>> 6a16d845ef84908fdc09f4f7ffe5ec210c449296
 
 # local env files
 .env*.local
