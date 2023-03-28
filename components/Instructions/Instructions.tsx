@@ -1,12 +1,12 @@
 import { CountActionType, countReducer, InitialActionType, InitialSubmitState, submitReducer, SubmitStateType } from '@/utilities/reducers'
 import { useReducer } from 'react'
 
-type StylesType = {
+export type StylesType = {
   readonly [key: string]: string
 }
 
 type InstructionsProps = {
-  styles: StylesType
+  styles?: StylesType
 }
 
 export default function Instructions({ styles }: InstructionsProps) {
@@ -17,7 +17,7 @@ export default function Instructions({ styles }: InstructionsProps) {
   const previouslySubmittedValues = submittedState.arrayValue.join(', ')
 
   return (
-    <div className={styles.myCenter}>
+    <div className={styles?.myCenter || ""}>
       <h3>Main Page</h3>
 
       <form>
